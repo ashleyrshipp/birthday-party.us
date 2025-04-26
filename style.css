@@ -1,120 +1,80 @@
-html, body {
-  -webkit-color-adjust: exact;
-  margin: 0;
-  height: calc(100 * var(--vh)); /* Use custom --vh */
-  overflow: hidden;
-  position: relative;
-  background-color: rgb(135, 206, 235);
-}
+  html, body {
+    -webkit-color-adjust: exact;
+    margin: 0;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+    background-color: rgb(135, 206, 235);
+  }
+  
+  #coin-counter {
+    position: absolute;
+    top: 0.5vh;
+    left: 6vh;
+    color: #ffffff; /* Gold for coins */
+    font-family: 'Luckiest Guy', Verdana, sans-serif;
+    font-size: 5vh;
+    text-shadow: 1px 1px 2px #000; /* Mario-style text */
+  }
 
-#ground-grid-1, #ground-grid-2 {
-  position: absolute;
-  bottom: 0;
-  height: calc(10 * var(--vh)); /* 10% screen height */
-  display: flex;
-  justify-content: flex-start;
-  flex-wrap: nowrap;
-  width: 100%;
-  animation: groundMove var(--speed) linear infinite;
-  animation-delay: 1s;
-}
-
-.ground {
-  width: calc(10 * var(--vh)); /* Square: 10% screen height */
-  height: calc(10 * var(--vh));
-  background-image: url('images/ground.png');
-  background-size: cover;
-  flex-shrink: 0;
-}
-
-#mario {
-  position: absolute;
-  bottom: calc(10 * var(--vh)); /* Sits on ground */
-  left: 25vw;
-  height: calc(10 * var(--vh));
-  animation: marioCycle 0.75s step-end infinite;
-  animation-delay: 1s;
-}
-
-#click-prompt {
-  position: absolute;
-  bottom: calc(7 * var(--vh)); /* Below Mario */
-  left: calc(25vw + calc(5 * var(--vh)));
-  transform: translateX(-50%);
-  color: #FFFFFF;
-  opacity: 0.5;
-  font-family: 'Luckiest Guy', Verdana, sans-serif;
-  font-size: calc(1.5 * var(--vh));
-  text-align: center;
-  text-shadow: 1px 1px 2px #000;
-}
-
-#overlay {
-  position: absolute;
-  top: calc(7 * var(--vh));
-  bottom: calc(21 * var(--vh));
-  left: 1vw;
-  right: 1vw;
-  background: rgba(255, 255, 255, 0.5);
-  border-radius: 10px;
-  z-index: 100;
-}
-
-#coin {
-  position: absolute;
-  top: calc(1 * var(--vh));
-  left: calc(1 * var(--vh));
-  height: calc(5 * var(--vh));
-}
-
-#coin-counter {
-  position: absolute;
-  top: calc(0.5 * var(--vh));
-  left: calc(6 * var(--vh));
-  color: #ffffff;
-  font-family: 'Luckiest Guy', Verdana, sans-serif;
-  font-size: calc(5 * var(--vh));
-  text-shadow: 1px 1px 2px #000;
-}
-
-.question-block {
-  will-change: transform;
-  position: absolute;
-  width: calc(10 * var(--vh));
-  height: calc(10 * var(--vh));
-  bottom: calc(19.5 * var(--vh) + 10vw); /* Adjusted for Mario's jump */
-  background-image: url('images/question-block.png');
-  background-size: cover;
-  animation: questionBlockMove var(--speed) linear forwards;
-}
-
-.coin {
-  position: absolute;
-  width: calc(10 * var(--vh));
-  height: calc(10 * var(--vh));
-  background-image: url('images/coin.png');
-  background-size: cover;
-  z-index: 10;
-  animation: coinMove 0.5s linear forwards;
-}
-
-/* Cloud container and other styles remain unchanged unless they use vh */
-#cloud-container {
-  position: absolute;
-  top: 0;
-  width: 100%;
-  height: calc(50 * var(--vh)); /* Top 50% of screen */
-  overflow: hidden;
-}
-
-.cloud {
-  position: absolute;
-  width: calc(14 * var(--vh));
-  height: calc(10 * var(--vh));
-  background-image: url('images/cloud.png');
-  background-size: cover;
-  animation: drift linear infinite;
-}
+  #click-prompt {
+    position: absolute;
+    bottom: 7vh; /* Below Mario’s 10vh base */
+    left: calc(25vw + 5vh); /* Align with Mario’s left edge */
+    transform: translateX(-50%); /* Center horizontally */
+    color: #FFFFFF; /* White */
+    opacity: 0.5; /* 50% transparent */
+    font-family: 'Luckiest Guy', Verdana, sans-serif;
+    font-size: 1.5vh; /* Small, adjustable */
+    text-align: center;
+    text-shadow: 1px 1px 2px #000; /* Match coin counter for readability */
+  }
+  
+  #ground-grid-1, #ground-grid-2 {
+    position: absolute;
+    bottom: 0;
+    height: 10vh; /* 1 row, 10% screen height */
+    display: flex;
+    justify-content: flex-start; /* Left-aligned */
+    flex-wrap: nowrap; /* One row */
+    width: 100%; /* Screen width */
+    animation: groundMove var(--speed) linear infinite; /* Move right to left, dynamic speed */
+    animation-delay: 1s;
+  }
+  
+  #ground-grid-1 {
+    left: 0; /* Start on-screen */
+  }
+  
+  .ground {
+    width: 10vh; /* Square: 10% screen height */
+    height: 10vh;
+    background-image: url('images/ground.png');
+    background-size: cover;
+    flex-shrink: 0; /* Prevent shrinking */
+  }
+  
+  @keyframes groundMove {
+    from { transform: translateX(0); } /* Start position */
+    to { transform: translateX(calc(-1 * var(--grid-width))); } /* Move left by 1 grid width */
+  }
+  
+  #cloud-container {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 50vh; /* Top 50% of screen */
+    overflow: hidden;
+  }
+  
+  .cloud {
+    position: absolute;
+    width: 14vh; /* Your cloud size */
+    height: 10vh;
+    background-image: url('images/cloud.png');
+    background-size: cover;
+    animation: drift linear infinite;
+  }
   
   @keyframes drift {
     from { transform: translateX(0); }
@@ -134,7 +94,7 @@ html, body {
     position: absolute;
     width: 10vh; /* Same as Mario, ground */
     height: 10vh;
-    bottom: calc(calc(19.5 * var(--vh)) + 10vw); /* Bottom at Mario's max jump height */
+    bottom: calc(19.5vh + 10vw); /* Bottom at Mario's max jump height */
     background-image: url('images/question-block.png');
     background-size: cover;
     animation: questionBlockMove var(--speed) linear forwards; /* Same speed, one cycle */

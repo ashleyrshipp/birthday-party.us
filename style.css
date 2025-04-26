@@ -134,7 +134,7 @@ html, body {
     position: absolute;
     width: 10vh; /* Same as Mario, ground */
     height: 10vh;
-    bottom: calc(19.5vh + 10vw); /* Bottom at Mario's max jump height */
+    bottom: calc(calc(19.5 * var(--vh)) + 10vw); /* Bottom at Mario's max jump height */
     background-image: url('images/question-block.png');
     background-size: cover;
     animation: questionBlockMove var(--speed) linear forwards; /* Same speed, one cycle */

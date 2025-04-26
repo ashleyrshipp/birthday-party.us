@@ -122,7 +122,7 @@
 
     /* Blue Section (Clouds) */
     #section-blue {
-      background-color: #049CD8; /* Mario blue */
+      background-color: rgb(0, 52, 196); /* Mario blue */
       color: #ffffff;
       text-shadow: 1px 1px 2px #000;
     }
@@ -212,22 +212,6 @@
       100% { transform: rotateY(360deg); }
     }
 
-      /* green Section */
-      #section-green{
-      background-color: #43B047; /* Mario green */
-      color: #000000;
-    }
-
-    #section-green .background-elements {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      z-index: -1;
-    }
-
     /* Content Styles */
     .section-title {
         text-align:center;
@@ -248,7 +232,6 @@
     .section-content p small{
       font-size: 2vh;
     }
-    
 
     #address {
       font-family: 'DynaPuff', system-ui;
@@ -280,19 +263,15 @@
     }
 
     #contact-info {
-      text-align:center;
       font-size: 3.5vh;
       font-style: italic;
       margin: 2vh 0;
     }
 
     #contact-info a {
-      text-align:center;
-      font-size:4vh;
-      color: rgb(255, 60, 0);
-      text-shadow: 1px 1px 2px #000; /* Mario-style shadow */
-      text-decoration: none;
-
+        text-align:center;
+      color: rgb(229, 37, 33);
+      text-decoration: underline;
       font-family: 'DynaPuff', system-ui;
     }
 
@@ -368,8 +347,7 @@
   </div>
   <div id="section-green" class="section">
     <div class="background-elements"></div>
-    <img style="height:25vh;" src="images/question-block.png"> 
-    <!-- <div class="section-title">Contact</div> -->
+    <div class="section-title">Contact</div>
     <div class="section-content">
       <div id="contact-info">
         <p>Call or text if you have questions!</p>

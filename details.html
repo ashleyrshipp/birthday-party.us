@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, interactive-widget=resizes-content">
+  <title>Party Details - Marcus & Clayton's Mario Party</title>
+  <link href="https://fonts.googleapis.com/css2?family=DynaPuff:wght@400..700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      justify-content: center;
+      text-align: center;
+      margin: 0;
+      height: 100vh;
+      position: relative;
+      background-color: rgb(135, 206, 235); /* Sky blue from index.html */
+      font-family: 'Luckiest Guy', Verdana, sans-serif;
+    }
+
+    #overlay {
+      position: absolute;
+      top: 7vh;
+      bottom: 7vh;
+      left: 1vw;
+      right: 1vw;
+      background: rgba(255, 255, 255, 0.5); /* 50% transparent white */
+      border-radius: 10px;
+      z-index: 100;
+      overflow: hidden; /* Keep background fixed */
+      box-sizing: border-box;
+    }
+
+    #scrollable-content {
+      height: 100%;
+      overflow-y: auto; /* Enable scrolling */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2vh;
+      padding-bottom: 2vh; /* Add bottom padding for phone number */
+      -ms-overflow-style: none; /* Hide scrollbar in IE/Edge */
+      scrollbar-width: none; /* Hide scrollbar in Firefox */
+    }
+
+    #scrollable-content::-webkit-scrollbar {
+      display: none; /* Hide scrollbar in WebKit browsers */
+    }
+
+    #overlay-title {
+      color: rgb(229, 37, 33); /* Mario red */
+      font-size: 8vh;
+      text-shadow: 1px 1px 2px #000;
+      text-align: center;
+      margin: 0 0 1vh 0;
+    }
+
+    #overlay-content {
+      color: #000000;
+      font-size: 3vh;
+      text-align: center;
+      text-shadow: 1px 1px 2px #000;
+      width: 100%;
+    }
+
+    #overlay-content p {
+      margin: 0.5vh 0;
+    }
+    #overlay-content p2 {
+      font-size: 2.5vh;
+    }
+    #address {
+      color: rgb(0, 52, 196); /* Blue for emphasis */
+      font-family: 'DynaPuff', system-ui; /* Matches 'Click for details' */
+      font-size: 3vh;
+      text-shadow: 1px 1px 2px #000;
+      margin-bottom: 1vh; /* Small gap to map */
+    }
+
+    #map-container {
+      width: 80%;
+      max-width: 600px;
+      height: 30vh;
+      margin: 1vh auto; /* Small gap above and below */
+    }
+
+    #map-container iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      border-radius: 5px;
+    }
+
+    #bottom-content {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    #parking-image {
+      width: 80%;
+      max-width: 600px;
+      height: auto;
+      margin: 1vh auto;
+      border: 2px solid #43B047; /* Green border */
+      border-radius: 5px;
+    }
+
+    #contact-info {
+      color: #FBD000; /* Mario yellow */
+      font-size: 3.5vh;
+      text-shadow: 1px 1px 2px #000;
+      font-style: italic;
+      margin-top: 1vh;
+    }
+
+    #contact-info a {
+      color: rgb(229, 37, 33); /* Mario red */
+      text-decoration: underline;
+      font-family: 'DynaPuff', system-ui; /* Matches address font */
+    }
+
+    @media (max-width: 768px) {
+      #overlay-title {
+        font-size: 6vh;
+      }
+
+      #overlay-content {
+        font-size: 2.5vh;
+      }
+
+      #address {
+        font-size: 2.5vh;
+        margin-bottom: 0.5vh; /* Tighter gap on mobile */
+      }
+
+      #contact-info {
+        font-size: 3vh;
+        padding-top:3vh;
+        padding-bottom:10vh;
+      }
+
+      #map-container {
+        height: 25vh;
+        margin: 0.5vh auto; /* Tighter gap on mobile */
+      }
+
+      #parking-image {
+        height: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="overlay">
+    <div id="scrollable-content">
+      <div id="overlay-title">Party Details</div>
+      <div id="overlay-content">
+        <p>Party will be in the backyard with lots of snacks, fresh pizza, fun games, activites, and more!</p>
+        <p id="address">1382 Land Grove Drive<br>Kernersville, NC 27284</p>
+        <div id="map-container">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d667.2089160249465!2d-80.12057489575868!3d36.08880709973762!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8853a9c0a1aeccd3%3A0xa788bcf1758a07da!2s1382%20Land%20Grv%20Dr%2C%20Kernersville%2C%20NC%2027284!5e0!3m2!1sen!2sus!4v1745635243515!5m2!1sen!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
+      <div id="bottom-content">
+        <p>Park on the street in front of the house. Look for the Mario star baloons in the front yard!<br>If spaces are full, there is extra parking near our community playground:</p>
+        <a href="/images/parking.png"><img id="parking-image" src="images/parking.png" alt="Extra Parking Map"></a>
+        <div id="contact-info">
+          If you have questions: call or text <a href="tel:+13367053322">(336) 705-3322</a>!
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

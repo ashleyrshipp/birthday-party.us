@@ -86,6 +86,79 @@
       animation-delay: -0.4s;
     }
 
+    #contact-info a {
+    text-align: center;
+    font-size: 4vh;
+    color: rgb(255, 60, 0);
+    text-shadow: 1px 1px 2px #000; /* Mario-style shadow */
+    text-decoration: none;
+    font-family: 'DynaPuff', system-ui;
+  }
+
+    /* Go Back Indicator */
+    .go-back-holder {
+      display: flex;
+      flex-direction: row;
+      position: fixed;
+      justify-content: left;
+      align-items: center;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 10vh;
+      text-decoration: none; /* Remove default link underline */
+      color: inherit; /* Inherit color to avoid default blue */
+      cursor: pointer; /* Indicate clickability */
+      z-index: 3; /* Above background, below nothing */
+    }
+
+    .go-back-holder p {
+      color: white;
+      text-shadow: 1px 1px 2px #000; /* Mario-style shadow */
+      font-weight: bold;
+      font-family: 'DynaPuff', system-ui;
+      font-size: 3vh;
+      padding-left: 10vw;
+      margin-left: 15%; /* Align with original left: 15% */
+    }
+
+    .go-back {
+      position: absolute;
+      transform: rotate(90deg);
+      pointer-events: none; /* Prevent blocking clicks */
+      left: 15%; /* Align with original left: 15% */
+    }
+
+    .back-arrow span {
+      display: block;
+      width: 2.5vh;
+      height: 2.5vh;
+      border-bottom: 0.5vh solid white;
+      border-right: 0.5vh solid white;
+      margin: -1vh;
+      animation: animate 2s infinite;
+      text-shadow: 1px 1px 2px #000; /* Mario-style shadow */
+      pointer-events: none; /* Prevent blocking clicks */
+    }
+
+    .back-arrow span:nth-child(2) {
+      animation-delay: -0.2s;
+    }
+
+    .back-arrow span:nth-child(3) {
+      animation-delay: -0.4s;
+    }
+
+    .go-back-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 10vh;
+      background-color: rgba(255, 255, 255, 0.5); /* 50% transparent white */
+      z-index: 2; /* Below go-back-holder */
+    }
+
     @keyframes animate {
       0% {
         opacity: 0;
@@ -143,7 +216,7 @@
 
     @keyframes drift {
       0% { transform: translateX(0); opacity: 0.7; } /* Start at random position */
-      100% { transform: translateX(-110vw); opacity: 0.7; } /* Move to left edge */
+      100% { transform: translateX(-138vw); opacity: 0.7; } /* Move to left edge */
     }
 
     /* Red Section (Bricks) */
@@ -286,7 +359,7 @@
       margin: 2vh 0;
     }
 
-    #contact-info a {
+    #contact-info a{
       text-align:center;
       font-size:4vh;
       color: rgb(255, 60, 0);
@@ -328,7 +401,17 @@
   </style>
 </head>
 <body>
-  <div id="cloud-container"></div>
+  <div class="go-back-background"></div>
+  <a class="go-back-holder" href="index.html">
+    <div class="go-back">
+      <div class="back-arrow">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+    <p>GO BACK TO RSVP</p>
+  </a>
   <div id="section-blue" class="section">
     <div class="background-elements"></div>
     <div class="section-title">Extra Details</div>
@@ -351,7 +434,7 @@
     <div class="section-content">
       <p id="address">1382 Land Grove Drive<br>Kernersville, NC 27284</p>
       <div id="map-container">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d667.2089160249465!2d-80.12057489575868!3d36.08880709973762!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8853a9c0a1aeccd3%3A0xa788bcf1758a07da!2s1382%20Land%20Grv%20Dr%2C%20Kernersville%2C%20NC%2027284!5e0!3m2!1sen!2sus!4v1745635243515!5m2!1sen!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!m12!1m3!1d667.2089160249465!2d-80.12057489575868!3d36.08880709973762!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8853a9c0a1aeccd3%3A0xa788bcf1758a07da!2s1382%20Land%20Grv%20Dr%2C%20Kernersville%2C%20NC%2027284!5e0!3m2!1sen!2sus!4v1745635243515!5m2!1sen!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
     </div>
     </div>
   </div>

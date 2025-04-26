@@ -1,0 +1,269 @@
+  html, body {
+    -webkit-color-adjust: exact;
+    margin: 0;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+    background-color: rgb(135, 206, 235);
+  }
+  
+  #coin-counter {
+    position: absolute;
+    top: 0.5vh;
+    left: 6vh;
+    color: #ffffff; /* Gold for coins */
+    font-family: 'Luckiest Guy', Verdana, sans-serif;
+    font-size: 5vh;
+    text-shadow: 1px 1px 2px #000; /* Mario-style text */
+  }
+
+  #click-prompt {
+    position: absolute;
+    bottom: 7vh; /* Below Mario’s 10vh base */
+    left: calc(25vw + 5vh); /* Align with Mario’s left edge */
+    transform: translateX(-50%); /* Center horizontally */
+    color: #FFFFFF; /* White */
+    opacity: 0.5; /* 50% transparent */
+    font-family: 'Luckiest Guy', Verdana, sans-serif;
+    font-size: 1.5vh; /* Small, adjustable */
+    text-align: center;
+    text-shadow: 1px 1px 2px #000; /* Match coin counter for readability */
+  }
+  
+  #ground-grid-1, #ground-grid-2 {
+    position: absolute;
+    bottom: 0;
+    height: 10vh; /* 1 row, 10% screen height */
+    display: flex;
+    justify-content: flex-start; /* Left-aligned */
+    flex-wrap: nowrap; /* One row */
+    width: 100%; /* Screen width */
+    animation: groundMove var(--speed) linear infinite; /* Move right to left, dynamic speed */
+    animation-delay: 1s;
+  }
+  
+  #ground-grid-1 {
+    left: 0; /* Start on-screen */
+  }
+  
+  .ground {
+    width: 10vh; /* Square: 10% screen height */
+    height: 10vh;
+    background-image: url('images/ground.png');
+    background-size: cover;
+    flex-shrink: 0; /* Prevent shrinking */
+  }
+  
+  @keyframes groundMove {
+    from { transform: translateX(0); } /* Start position */
+    to { transform: translateX(calc(-1 * var(--grid-width))); } /* Move left by 1 grid width */
+  }
+  
+  #cloud-container {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 50vh; /* Top 50% of screen */
+    overflow: hidden;
+  }
+  
+  .cloud {
+    position: absolute;
+    width: 14vh; /* Your cloud size */
+    height: 10vh;
+    background-image: url('images/cloud.png');
+    background-size: cover;
+    animation: drift linear infinite;
+  }
+  
+  @keyframes drift {
+    from { transform: translateX(0); }
+    to { transform: translateX(-150vw); } /* Move past screen + cloud width */
+  }
+  
+  #question-block-container {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100vh; /* Full height to position blocks */
+    overflow: hidden;
+  }
+  
+  .question-block {
+    will-change: transform;
+    position: absolute;
+    width: 10vh; /* Same as Mario, ground */
+    height: 10vh;
+    bottom: calc(19.5vh + 10vw); /* Bottom at Mario's max jump height */
+    background-image: url('images/question-block.png');
+    background-size: cover;
+    animation: questionBlockMove var(--speed) linear forwards; /* Same speed, one cycle */
+  }
+  
+  @keyframes questionBlockMove {
+    from { transform: translateX(0); }
+    to { transform: translateX(calc(-1 * var(--grid-width-raw))); }
+  }
+  
+  .coin {
+    position: absolute;
+    width: 10vh; /* Same as question block */
+    height: 10vh;
+    background-image: url('images/coin.png');
+    background-size: cover;
+    z-index: 10; /* Behind question block but above others */
+    animation: coinMove 0.5s linear forwards; /* Move up, flash, disappear */
+  }
+  
+  @keyframes coinMove {
+    0% { transform: translateY(0); opacity: 1; } /* Start at block center */
+    50% { transform: translateY(-5vw); opacity: 1; } /* Move up 5vw */
+    75% { transform: translateY(-5vw); opacity: 0; } /* Flash off */
+    100% { transform: translateY(-5vw); opacity: 0; } /* Stay invisible */
+  }
+
+  #overlay {
+    position: absolute;
+    top: 7vh;
+    bottom: 21vh;
+    left: 1vw;
+    right: 1vw; /* Spans 2vw to 98vw, width: 96vw */
+    background: rgba(255, 255, 255, 0.5); /* 50% transparent white */
+    border-radius: 10px;
+    z-index: 100; /* Above all elements */
+  }
+
+  #overlay-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top:3vh;
+    padding-bottom:3vh;
+    color: rgb(229, 37, 33);
+    font-family: 'Luckiest Guy', Verdana, sans-serif;
+    text-shadow: 1px 1px 2px #000; /* Match coin counter, prompt */
+    text-align: center;
+  }
+  #overlay-emphasis {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #FBD000;
+    font-family: 'Luckiest Guy', Verdana, sans-serif;
+    font-size: 5vh; /* Medium size, adjustable */
+    text-shadow: 1px 1px 2px #000; /* Match coin counter, prompt */
+    text-align: center;
+    font-style:italic;
+    margin-top:2vh;
+  }
+  #overlay-content {
+    -webkit-color-adjust: exact;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #000000;
+    font-family: 'Luckiest Guy', Verdana, sans-serif;
+    font-size: 3vh;
+  } 
+  #overlay-content large{
+    text-decoration-line:none;
+    font-size: 5vh;
+  }
+  #overlay-content p {
+    margin: 0;
+    margin-bottom: 2vh;
+    text-align:center;
+  }
+  #overlay-content p1 {
+    color: #43B047;
+    text-shadow: 1px 1px 2px #000;
+    font-size: 4vh;
+    margin: 0;
+    margin-top: 2vh;
+    margin-bottom: 4vh;
+    text-align:center;
+  }
+
+  #overlay-content table {
+    margin: 0 auto; /* Center table */
+    width: auto; /* Fit content */
+    border-collapse: collapse; /* No gaps between cells */
+  }
+  #overlay-content table td.label {
+    text-align: right;
+    padding-right: 1vw; /* Small gap */
+    color: rgb(0, 52, 196);
+    font-weight: 100;
+    text-shadow: 1px 1px 2px #000;
+  }
+  #overlay-content table td.value {
+    text-align: left;
+    padding-left: 1vw; /* Small gap */
+    color: black;
+    text-shadow: 1px 1px 2px #000;
+    font-size: 2.8vh;
+  }
+  #overlay-content table td.label a {
+    color: rgb(229, 37, 33);
+    /* text-shadow: 0.25px 0.25px 0.5px #000; */
+    font-family: "DynaPuff", system-ui;
+    text-decoration: underline;
+    font-size: 1.5vh;
+    /* font-style: italic; */
+    font-weight: 0;
+    position: relative;
+    top: -1.5vh; /* Shift up to clip closer to '1382 Land Grove Dr.' */
+    }
+  #overlay-content table {
+    margin: 0 auto;
+    width: auto;
+    border-collapse: collapse;
+    line-height: 1.2; /* Tighten row height */
+  }
+  #coin {
+    position: absolute;
+    top: 1vh;
+    left: 1vh;
+    height: 5vh;
+  }
+  
+  #mario {
+    position: absolute;
+    bottom: 10vh; /* Sits on top of 1-row ground */
+    left: 25vw; /* Left edge at 25% screen width */
+    height: 10vh; /* Your Mario size */
+    animation: marioCycle 0.75s step-end infinite; /* Cycle images every 0.75s */
+    animation-delay: 1s;
+  }
+  
+  #mario.no-delay {
+    animation-delay: 0s; /* No delay after jump */
+  }
+  
+  #mario.jumping {
+    animation: marioJump 0.5s ease-in-out forwards; /* Jump animation on click */
+  }
+  
+  .paused {
+    animation-play-state: paused !important; /* Pause animations */
+  }
+  
+  @keyframes marioCycle {
+    0%, 25% { content: url('images/mario_walk1.png'); }
+    25%, 50% { content: url('images/mario_walk2.png'); }
+    50%, 75% { content: url('images/mario_walk3.png'); }
+    75%, 100% { content: url('images/mario_walk2.png'); }
+  }
+  
+  @keyframes marioJump {
+    0% { content: url('images/mario_jump.png'); bottom: 10vh; }
+    50% { content: url('images/mario_jump.png'); bottom: calc(10vh + 10vw); }
+    100% { content: url('images/mario_jump.png'); bottom: 10vh; }
+  }
+
+  @media (max-width: 768px) {
+    .ground, .question-block, .cloud {
+      animation-duration: 8s; /* Slower animations */
+    }
+  }

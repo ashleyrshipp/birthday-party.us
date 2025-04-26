@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Marcus & Clayton's Mario Party</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preload" href="images/ground.png" as="image">
+  <link rel="preload" href="images/coin.png" as="image">
+  <link rel="preload" href="images/cloud.png" as="image">
+  <link rel="preload" href="images/question-block.png" as="image">
+  <link href="https://fonts.googleapis.com/css2?family=DynaPuff:wght@400..700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Freckle+Face&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="overlay">
+    <div id="overlay-title">You're Invited!</div>
+    <div id="overlay-content">
+        <p>to join the fun with<br> <large>Marcus</large> & <large>Clayton</large> <br> for a Super Mario Party!</p>
+        <p1>Games, Pizza, and Cake!</p1>
+        <table>
+          <tr>
+            <td class="label"><strong>Date:</strong></td>
+            <td class="value">Saturday, May 17</td>
+          </tr>
+          <tr>
+            <td class="label"><strong>Time:</strong></td>
+            <td class="value">1 PM - 3 PM</td>
+          </tr>
+          <tr>
+            <td class="label"><strong>Location:</strong><br><a href="/details.html">(Click for details)</a></td>
+            <td class="value">1382 Land Grove Dr.<br>Kernersville, NC</td>
+          </tr>
+        </table>
+      </div>
+    <div id="overlay-emphasis">RSVP here!</div>
+  </div>
+  <div id="counter">
+    <img id="coin" src="images/coin.png" alt="coin">
+    <div id="coin-counter">00</div>
+  </div>
+  <div id="ground-grid-1"></div>
+  <div id="ground-grid-2"></div>
+  <div id="cloud-container"></div>
+  <div id="question-block-container"></div>
+  <div id="click-prompt">Click Mario</div>
+  <img id="mario" src="images/mario_walk1.png" alt="Mario">
+  <!-- Preload images -->
+  <img src="images/mario_walk1.png" style="display: none;" aria-hidden="true">
+  <img src="images/mario_walk2.png" style="display: none;" aria-hidden="true">
+  <img src="images/mario_walk3.png" style="display: none;" aria-hidden="true">
+  <img src="images/mario_jump.png" style="display: none;" aria-hidden="true">
+  <img src="images/question-block.png" style="display: none;" aria-hidden="true">
+  <script src="script.js"></script>
+</body>
+</html>

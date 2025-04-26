@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, interactive-widget=resizes-content">
+  <title>RSVP - Marcus & Clayton's Mario Party</title>
+  <link href="https://fonts.googleapis.com/css2?family=DynaPuff:wght@400..700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
+  <link rel="preload" href="images/ground.png" as="image">
+  <link rel="preload" href="images/cloud.png" as="image">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow-x: hidden;
+      overflow-y: auto; /* Allow scrolling */
+      background-color: rgb(135, 206, 235); /* Sky blue */
+      font-family: 'Luckiest Guy', Verdana, sans-serif;
+      position: relative;
+      -ms-overflow-style: none; /* Hide scrollbar in IE/Edge */
+      scrollbar-width: none; /* Hide scrollbar in Firefox */
+    }
+
+    html::-webkit-scrollbar, body::-webkit-scrollbar {
+      display: none; /* Hide scrollbar in Chrome/Safari */
+    }
+
+    /* Ground Blocks */
+    .ground-grid {
+      position: absolute;
+      bottom: 0;
+      height: 10vh;
+      width: 100%;
+      display: flex;
+      flex-wrap: nowrap;
+      z-index: -1; /* Behind content, like clouds */
+    }
+
+    .ground {
+      width: 10vh;
+      height: 10vh;
+      background-image: url('images/ground.png');
+      background-size: cover;
+      flex-shrink: 0;
+      opacity: 0.7;
+    }
+
+    /* Go Back Indicator */
+    .go-back-holder {
+      display: flex;
+      flex-direction: row;
+      position: fixed;
+      justify-content: left;
+      align-items: center;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 10vh;
+      text-decoration: none; /* Remove default link underline */
+      color: inherit; /* Inherit color to avoid default blue */
+      cursor: pointer; /* Indicate clickability */
+      z-index: 3; /* Above background */
+    }
+
+    .go-back-holder p {
+      color: white;
+      font-weight: bold;
+      font-family: 'DynaPuff', system-ui;
+      font-size: 3vh;
+      padding-left: 10vw;
+      margin-left: 15%; /* Align with details.html */
+      text-shadow: 1px 1px 2px #000; /* Mario-style shadow */
+    }
+
+    .go-back {
+      position: absolute;
+      transform: rotate(90deg);
+      pointer-events: none; /* Prevent blocking clicks */
+      left: 15%; /* Align with details.html */
+    }
+
+    .back-arrow span {
+      display: block;
+      width: 2.5vh;
+      height: 2.5vh;
+      border-bottom: 0.5vh solid white;
+      border-right: 0.5vh solid white;
+      margin: -1vh;
+      animation: animate 2s infinite;
+      text-shadow: 1px 1px 2px #000; /* Mario-style shadow */
+      pointer-events: none; /* Prevent blocking clicks */
+    }
+
+    .back-arrow span:nth-child(2) {
+      animation-delay: -0.2s;
+    }
+
+    .back-arrow span:nth-child(3) {
+      animation-delay: -0.4s;
+    }
+
+    .go-back-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 10vh;
+      background-color: rgba(255, 255, 255, 0.5); /* 50% transparent white */
+      z-index: 2; /* Below go-back-holder */
+    }
+
+    @keyframes animate {
+      0% {
+        opacity: 0;
+        transform: rotate(45deg) translate(-2vh, -2vh);
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+        transform: rotate(45deg) translate(2vh, 2vh);
+      }
+    }
+
+    /* Sections */
+    .section {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      padding: 2vh 5vw 12vh 5vw; /* Added padding-bottom for ground blocks */
+      box-sizing: border-box;
+      opacity: 0;
+      transform: scale(0.95);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .section.visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* Blue Section (Clouds) */
+    #section-blue {
+      background-color: #049CD8; /* Mario blue */
+      color: #ffffff;
+      text-shadow: 1px 1px 2px #000;
+    }
+
+    #section-blue .background-elements {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: -1;
+    }
+
+    .cloud {
+      position: absolute;
+      width: 14vh;
+      height: 10vh;
+      background-image: url('images/cloud.png');
+      background-size: cover;
+      opacity: 0.7;
+      pointer-events: none; /* Allow scroll events */
+      animation: drift linear infinite;
+    }
+
+    @keyframes drift {
+      0% { transform: translateX(0); opacity: 0.7; }
+      100% { transform: translateX(-138vw); opacity: 0.7; }
+    }
+
+    /* Form Styles */
+    .section-content {
+      font-size: 3vh;
+      text-align: center;
+      width: 100%; /* Ensure full width for form container */
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 8vh;
+      margin: 10vh 0 2vh 0; /* Added margin-top to avoid go-back overlap */
+      transition: opacity 0.3s ease; /* Smooth opacity transition */
+    }
+
+    .form-container {
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 3vh;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      width: 80%;
+      min-width: 80%;
+      max-width: 80%;
+      box-sizing: border-box;
+      min-height: 60vh; /* Consistent height */
+      transition: opacity 0.3s ease; /* Smooth opacity transition */
+    }
+
+    .form-group {
+      margin: 2vh 0;
+      text-align: left;
+    }
+
+    .form-group label {
+      font-family: 'DynaPuff', system-ui;
+      font-size: 2.5vh;
+      color: #000;
+      display: block;
+      margin-bottom: 1vh;
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="tel"],
+    .form-group textarea {
+      font-family: 'DynaPuff', system-ui;
+      font-size: 2.5vh;
+      padding: 1vh;
+      width: 100%;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .form-group input[type="radio"],
+    .form-group input[type="checkbox"] {
+      width: auto;
+      margin-right: 1vh;
+    }
+
+    .form-group .radio-group,
+    .form-group .checkbox-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2vw;
+      align-items: center;
+    }
+
+    .form-group .checkbox-group label {
+      display: flex;
+      align-items: center;
+      gap: 1vw;
+    }
+
+    .form-group .character-img {
+      max-height: 3vh;
+      max-width: 3vh;
+      object-fit: contain;
+      vertical-align: middle;
+    }
+
+    .form-group.siblings-group {
+      display: flex;
+      align-items: center;
+      gap: 2vw;
+    }
+
+    .form-group.siblings-group .radio-group {
+      flex: 1;
+    }
+
+    .form-group.siblings-group .siblings-number-group {
+      display: flex;
+      align-items: center;
+      gap: 1vw;
+      margin: 0;
+    }
+
+    .form-group.siblings-group .siblings-number-group label {
+      display: inline-block;
+      margin: 0;
+      font-size: 2vh;
+    }
+
+    .form-group.siblings-group .siblings-number-group input[type="text"] {
+      width: 5em; /* Small width for number input */
+      font-size: 2vh;
+      padding: 0.5vh;
+    }
+
+    .form-group .checkbox-group .other-container {
+      display: flex;
+      align-items: center;
+      gap: 1vw;
+    }
+
+    .form-group .checkbox-group .other-container input[type="text"] {
+      width: 15em; /* Slightly larger for text input */
+      font-size: 2vh;
+      padding: 0.5vh;
+    }
+
+    .form-group .checkbox-group .other-container label {
+      font-size: 2vh;
+      margin: 0;
+    }
+
+    .form-group.siblings-group,
+    .form-group.siblings-number-group,
+    .form-group.allergies-group,
+    .form-group.pizza-group,
+    .form-group.character-group,
+    .form-group.phone-group,
+    .form-group.comments-group {
+      display: none; /* Hidden by default */
+    }
+
+    .submit-button {
+      background-color: #43B047; /* Mario green */
+      color: #fff;
+      font-family: 'Luckiest Guy', Verdana, sans-serif;
+      font-size: 3vh;
+      padding: 2vh 4vw;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 2vh;
+      text-shadow: 1px 1px 2px #000;
+    }
+
+    .submit-button:hover {
+      background-color: #3a9c3d;
+    }
+
+    @media (max-width: 768px) {
+      .section-title {
+        font-size: 6vh;
+        margin: 12vh 0 2vh 0; /* Adjusted for smaller screens */
+      }
+
+      .section-content {
+        font-size: 2.5vh;
+      }
+
+      .form-container {
+        width: 95%;
+        min-width: 95%;
+        max-width: 95%;
+      }
+
+      .form-group label,
+      .form-group input[type="text"],
+      .form-group input[type="tel"],
+      .form-group textarea,
+      .form-group input[type="radio"],
+      .form-group input[type="checkbox"] {
+        font-size: 2vh;
+      }
+
+      .submit-button {
+        font-size: 2.5vh;
+        padding: 1.5vh 3vw;
+      }
+
+      .form-group .character-img {
+        max-height: 2.5vh;
+        max-width: 2.5vh;
+      }
+
+      .form-group.siblings-group .siblings-number-group input[type="text"] {
+        width: 4em;
+      }
+
+      .form-group .checkbox-group .other-container input[type="text"] {
+        width: 10em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="go-back-background"></div>
+  <a class="go-back-holder" href="index.html">
+    <div class="go-back">
+      <div class="back-arrow">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+    <p>BACK TO INVITE</p>
+  </a>
+  <div id="section-blue" class="section">
+    <div class="background-elements"></div>
+    <div class="section-title">RSVP</div>
+    <div class="section-content">
+      <div class="form-container">
+        <form name="rsvp" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" action="/success">
+          <input type="hidden" name="form-name" value="rsvp">
+          <p hidden>
+            <label>Don’t fill this out: <input name="bot-field"></label>
+          </p>
+          <div class="form-group">
+            <label for="parent_name">Name (Parent):</label>
+            <input type="text" id="parent_name" name="parent_name" required>
+          </div>
+          <div class="form-group">
+            <label for="kid_name">Name (Kid):</label>
+            <input type="text" id="kid_name" name="kid_name" required>
+          </div>
+          <div class="form-group">
+            <label>Attending:</label>
+            <div class="radio-group">
+              <label><input type="radio" name="attending" value="YES" required> YES</label>
+              <label><input type="radio" name="attending" value="NO"> NO</label>
+            </div>
+          </div>
+          <div class="form-group siblings-group">
+            <label>Any Siblings Attending?</label>
+            <div class="radio-group">
+              <label><input type="radio" name="siblings" value="Y"> Yes</label>
+              <label><input type="radio" name="siblings" value="N"> No</label>
+            </div>
+            <div class="siblings-number-group">
+              <label for="siblings_number">How Many?</label>
+              <input type="text" id="siblings_number" name="siblings_number">
+            </div>
+          </div>
+          <div class="form-group pizza-group">
+            <label>Favorite Pizza(s):</label>
+            <div class="checkbox-group">
+              <label><input type="checkbox" name="pizza[]" value="Cheese"> Cheese</label>
+              <label><input type="checkbox" name="pizza[]" value="Veggie"> Veggie</label>
+              <label><input type="checkbox" name="pizza[]" value="Pepperoni"> Pepperoni</label>
+              <label><input type="checkbox" name="pizza[]" value="Chicken Alfredo"> Chicken Alfredo</label>
+              <label class="other-container">
+                <input type="checkbox" name="pizza[]" value="Other" class="pizza-other"> Other:
+                <input type="text" id="pizza_other" name="pizza_other">
+              </label>
+            </div>
+          </div>
+          <div class="form-group allergies-group">
+            <label for="allergies">Allergies/Restrictions?:</label>
+            <textarea id="allergies" name="allergies" rows="2" placeholder="(optional)"></textarea>
+          </div>
+          <div class="form-group character-group">
+            <label>Favorite Mario Character(s):</label>
+            <div class="checkbox-group">
+              <label><input type="checkbox" name="character[]" value="Mario"> <img src="images/mario.png" alt="Mario" class="character-img"> Mario</label>
+              <label><input type="checkbox" name="character[]" value="Luigi"> <img src="images/luigi.png" alt="Luigi" class="character-img"> Luigi</label>
+              <label><input type="checkbox" name="character[]" value="Princess Peach"> <img src="images/peach.png" alt="Princess Peach" class="character-img"> Peach</label>
+              <label><input type="checkbox" name="character[]" value="Bowser"> <img src="images/bowser.png" alt="Bowser" class="character-img"> Bowser</label>
+              <label><input type="checkbox" name="character[]" value="Toad"> <img src="images/toad.png" alt="Toad" class="character-img"> Toad</label>
+              <label><input type="checkbox" name="character[]" value="Yoshi"> <img src="images/yoshi.png" alt="Yoshi" class="character-img"> Yoshi</label>
+              <label class="other-container">
+                <input type="checkbox" name="character[]" value="Other" class="character-other"> Other:
+                <input type="text" id="character_other" name="character_other">
+              </label>
+            </div>
+          </div>
+          <div class="form-group phone-group">
+            <label for="phone_number">Contact Phone Number:</label>
+            <input type="tel" id="phone_number" name="phone_number" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="123-456-7890" required>
+          </div>
+          <div class="form-group comments-group">
+            <label for="comments">Comments (Optional):</label>
+            <textarea id="comments" name="comments" rows="2"></textarea>
+          </div>
+          <button type="submit" class="submit-button">Submit RSVP</button>
+        </form>
+      </div>
+    </div>
+    <div class="ground-grid"></div>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Ground blocks
+      const groundGrid = document.querySelector('#section-blue .ground-grid');
+      const blockSize = window.innerHeight * 0.1;
+      const blockCount = Math.ceil(window.innerWidth / blockSize);
+      for (let i = 0; i < blockCount; i++) {
+        const block = document.createElement('div');
+        block.className = 'ground';
+        groundGrid.appendChild(block);
+      }
+
+      // Blue Section: Clouds
+      const blueBg = document.querySelector('#section-blue .background-elements');
+      for (let i = 0; i < 6; i++) {
+        const cloud = document.createElement('div');
+        cloud.className = 'cloud';
+        cloud.style.top = `${Math.random() * 80}%`;
+        cloud.style.left = '105vw';
+        const speed = 15 + Math.random() * 10; /* Random duration 15-25s */
+        cloud.style.animation = `drift ${speed}s linear infinite`;
+        cloud.style.animationDelay = `${Math.random() * 15}s`;
+        blueBg.appendChild(cloud);
+      }
+
+      // Scroll Animation
+      const sections = document.querySelectorAll('.section');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.3 });
+      sections.forEach(section => observer.observe(section));
+
+      // Form Conditional Logic
+      const attendingRadios = document.querySelectorAll('input[name="attending"]');
+      const siblingsGroup = document.querySelector('.siblings-group');
+      const siblingsNumberGroup = document.querySelector('.siblings-number-group');
+      const allergiesGroup = document.querySelector('.allergies-group');
+      const pizzaGroup = document.querySelector('.pizza-group');
+      const characterGroup = document.querySelector('.character-group');
+      const phoneGroup = document.querySelector('.phone-group');
+      const commentsGroup = document.querySelector('.comments-group');
+      const siblingsRadios = document.querySelectorAll('input[name="siblings"]');
+      const pizzaOtherCheckbox = document.querySelector('.pizza-other');
+      const characterOtherCheckbox = document.querySelector('.character-other');
+      const pizzaOtherInput = document.querySelector('#pizza_other');
+      const characterOtherInput = document.querySelector('#character_other');
+
+      let siblingsSelection = null; // Track siblings radio state
+
+      // Initially hide siblings number group
+      siblingsNumberGroup.style.display = 'none';
+
+      // Fade effect on scroll
+      const sectionTitle = document.querySelector('.section-title');
+      const formContainer = document.querySelector('.form-container');
+      const headerHeight = document.querySelector('.go-back-background').offsetHeight;
+
+      const updateOpacity = () => {
+        const titleRect = sectionTitle.getBoundingClientRect();
+        const formRect = formContainer.getBoundingClientRect();
+        const threshold = headerHeight; // 10vh
+
+        // Calculate opacity for title
+        if (titleRect.top <= threshold && titleRect.top >= 0) {
+          sectionTitle.style.opacity = titleRect.top / threshold;
+        } else if (titleRect.top > threshold) {
+          sectionTitle.style.opacity = 1;
+        } else {
+          sectionTitle.style.opacity = 0;
+        }
+
+        // Calculate opacity for form
+        if (formRect.top <= threshold && formRect.top >= 0) {
+          formContainer.style.opacity = formRect.top / threshold;
+        } else if (formRect.top > threshold) {
+          formContainer.style.opacity = 1;
+        } else {
+          formContainer.style.opacity = 0;
+        }
+      };
+
+      window.addEventListener('scroll', updateOpacity);
+      updateOpacity(); // Initial call
+
+      attendingRadios.forEach(radio => {
+        radio.addEventListener('change', () => {
+          if (radio.value === 'YES') {
+            siblingsGroup.style.display = 'block';
+            allergiesGroup.style.display = 'block';
+            pizzaGroup.style.display = 'block';
+            characterGroup.style.display = 'block';
+            phoneGroup.style.display = 'block';
+            commentsGroup.style.display = 'block';
+            siblingsGroup.querySelectorAll('input').forEach(input => input.required = true);
+            phoneGroup.querySelector('input').required = true;
+            // Restore siblings number visibility if previously Y
+            if (siblingsSelection === 'Y') {
+              siblingsNumberGroup.style.display = 'block';
+              siblingsNumberGroup.querySelector('input').required = true;
+            } else {
+              siblingsNumberGroup.style.display = 'none';
+              siblingsNumberGroup.querySelector('input').required = false;
+            }
+          } else {
+            siblingsGroup.style.display = 'none';
+            siblingsNumberGroup.style.display = 'none';
+            allergiesGroup.style.display = 'none';
+            pizzaGroup.style.display = 'none';
+            characterGroup.style.display = 'none';
+            phoneGroup.style.display = 'none';
+            commentsGroup.style.display = 'block';
+            siblingsGroup.querySelectorAll('input').forEach(input => input.required = false);
+            siblingsNumberGroup.querySelector('input').required = false;
+            pizzaOtherInput.required = false;
+            characterOtherInput.required = false;
+            phoneGroup.querySelector('input').required = false;
+          }
+        });
+      });
+
+      siblingsRadios.forEach(radio => {
+        radio.addEventListener('change', () => {
+          siblingsSelection = radio.value; // Update siblings state
+          if (radio.value === 'Y') {
+            siblingsNumberGroup.style.display = 'block';
+            siblingsNumberGroup.querySelector('input').required = true;
+          } else {
+            siblingsNumberGroup.style.display = 'none';
+            siblingsNumberGroup.querySelector('input').required = false;
+          }
+        });
+      });
+
+      pizzaOtherCheckbox.addEventListener('change', () => {
+        pizzaOtherInput.required = pizzaOtherCheckbox.checked;
+      });
+
+      characterOtherCheckbox.addEventListener('change', () => {
+        characterOtherInput.required = characterOtherCheckbox.checked;
+      });
+    });
+  </script>
+</body>
+</html>

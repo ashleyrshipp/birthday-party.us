@@ -28,8 +28,15 @@ document.addEventListener('DOMContentLoaded', () => {
     span.remove();
   }
 
+  // Set custom property for viewport height
+  function setViewportHeight() {
+    const vh = window.innerHeight * 0.01; // 1vh in pixels
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+  }
+
   // Run on load and resize
   adjustOverlayTitleFont();
+  setViewportHeight();
   window.addEventListener('resize', () => window.location.reload());
 
 

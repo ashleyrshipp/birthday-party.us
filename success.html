@@ -1,0 +1,130 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, interactive-widget=resizes-content, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>RSVP Success - Marcus & Clayton's Mario Party</title>
+    <link href="https://fonts.googleapis.com/css2?family=DynaPuff:wght@400..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
+    <style>
+      html, body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow: hidden;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background-color: rgb(135, 206, 235); /* Sky blue */
+        font-family: 'Luckiest Guy', Verdana, sans-serif;
+        position: relative;
+      }
+
+      /* Success Section */
+      .success-section {
+        min-height: var(--vh);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        padding: calc(var(--vh) * 0.02) 5vw;
+        box-sizing: border-box;
+        background-color: #049CD8; /* Mario blue, matching section-blue */
+        color: #ffffff;
+        text-shadow: 1px 1px 2px #000;
+      }
+  
+      /* Mario Star */
+      .mario-star {
+        width: 50vmin; /* 50% of the smaller dimension (viewport width or height) */
+        height: 50vmin;
+        object-fit: contain;
+        margin-bottom: calc(var(--vh) * 0.02);
+      }
+  
+      /* Success Message */
+      .success-message {
+        font-family: "DynaPuff", system-ui;
+        font-size: calc(var(--vh) * 0.04);
+        text-align: center;
+        max-width: 90%;
+      }
+  
+      .success-message p {
+        margin: calc(var(--vh) * 0.01) 0;
+      }
+  
+      .success-message a {
+        color: rgb(255, 60, 0);
+        text-shadow: 1px 1px 2px #000;
+        text-decoration: none;
+        font-family: 'DynaPuff', system-ui;
+        font-size: calc(var(--vh) * 0.05);
+      }
+
+      /* Thanks Message */
+      .thanks-message {
+        font-family: 'Luckiest Guy', Verdana, sans-serif;
+        font-size: calc(var(--vh) * 0.04);
+        text-align: center;
+        max-width: 90%;
+      }
+  
+      .thanks-message p {
+        margin: calc(var(--vh) * 0.01) 0;
+      }
+  
+      /* Responsive Adjustments */
+      @media (max-width: 768px) {
+        .success-message {
+          font-size: calc(var(--vh) * 0.03);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="success-section">
+        <div class="thanks-message">
+            <p>Thanks for the RSVP!</p>
+        </div>
+      <img src="images/mario-star.png" alt="Mario Star" class="mario-star">
+      <div class="thanks-message">
+        <p>I will reach out via text to confirm!</p>
+    </div>
+      <div class="success-message">
+        <p><br>If you don't hear from me within a few days, or if you have any questions, please reach out!</p>
+        <p><br><b>Ashley Shipp</b> (mom)</p>
+        <p><a href="tel:+13367053322">(336) 705-3322</a></p>
+      </div>
+    </div>
+    <script>
+      // Fix viewport height for mobile
+      function setViewportHeight() {
+        const vh = window.innerHeight;
+        document.documentElement.style.setProperty('--vh', `${vh}px`);
+      }
+  
+      // Force fullscreen behavior
+      function forceFullscreen() {
+        document.body.style.height = `${window.innerHeight}px`;
+        window.scrollTo(0, 1);
+      }
+  
+      // Set viewport height and force fullscreen on load, resize, and orientation change
+      window.addEventListener('load', () => {
+        setViewportHeight();
+        forceFullscreen();
+      });
+      window.addEventListener('resize', () => {
+        setViewportHeight();
+        forceFullscreen();
+      });
+      window.addEventListener('orientationchange', () => {
+        setViewportHeight();
+        forceFullscreen();
+      });
+  
+    </script>
+  </body>

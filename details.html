@@ -87,13 +87,13 @@
     }
 
     #contact-info a {
-    text-align: center;
-    font-size: 4vh;
-    color: rgb(255, 60, 0);
-    text-shadow: 1px 1px 2px #000; /* Mario-style shadow */
-    text-decoration: none;
-    font-family: 'DynaPuff', system-ui;
-  }
+      text-align: center;
+      font-size: 4vh;
+      color: rgb(255, 60, 0);
+      text-shadow: 1px 1px 2px #000; /* Mario-style shadow */
+      text-decoration: none;
+      font-family: 'DynaPuff', system-ui;
+    }
 
     /* Go Back Indicator */
     .go-back-holder {
@@ -247,10 +247,10 @@
     }
 
     @keyframes fadeMove {
-    0% { opacity: 0; } /* Start invisible */
-    10% { opacity: 0.5; } /* Fully visible */
-    90% { opacity: 0.5; } /* Stay visible */
-    100% { opacity: 0; } /* Fade out % */
+      0% { opacity: 0; } /* Start invisible */
+      10% { opacity: 0.5; } /* Fully visible */
+      90% { opacity: 0.5; } /* Stay visible */
+      100% { opacity: 0; } /* Fade out */
     }
 
     /* Yellow Section (Coins) */
@@ -285,8 +285,8 @@
       100% { transform: rotateY(360deg); }
     }
 
-      /* green Section */
-      #section-green{
+    /* Green Section */
+    #section-green {
       background-color: #43B047; /* Mario green */
       color: #000000;
     }
@@ -303,7 +303,7 @@
 
     /* Content Styles */
     .section-title {
-        text-align:center;
+      text-align: center;
       font-size: 8vh;
       margin: 0 0 2vh 0;
     }
@@ -318,10 +318,9 @@
       margin: 1vh 0;
     }
 
-    .section-content p small{
+    .section-content p small {
       font-size: 2vh;
     }
-    
 
     #address {
       font-family: 'DynaPuff', system-ui;
@@ -336,13 +335,6 @@
       margin: 1vh auto;
     }
 
-    #map-container iframe {
-      width: 100%;
-      height: 100%;
-      border: 0;
-      border-radius: 5px;
-    }
-
     #parking-image {
       width: 80%;
       max-width: 600px;
@@ -353,19 +345,18 @@
     }
 
     #contact-info {
-      text-align:center;
+      text-align: center;
       font-size: 3.5vh;
       font-style: italic;
       margin: 2vh 0;
     }
 
-    #contact-info a{
-      text-align:center;
-      font-size:4vh;
+    #contact-info a {
+      text-align: center;
+      font-size: 4vh;
       color: rgb(255, 60, 0);
       text-shadow: 1px 1px 2px #000; /* Mario-style shadow */
       text-decoration: none;
-
       font-family: 'DynaPuff', system-ui;
     }
 
@@ -433,9 +424,7 @@
     <div class="section-title">Location</div>
     <div class="section-content">
       <p id="address">1382 Land Grove Drive<br>Kernersville, NC 27284</p>
-      <div id="map-container">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!m12!1m3!1d667.2089160249465!2d-80.12057489575868!3d36.08880709973762!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8853a9c0a1aeccd3%3A0xa788bcf1758a07da!2s1382%20Land%20Grv%20Dr%2C%20Kernersville%2C%20NC%2027284!5e0!3m2!1sen!2sus!4v1745635243515!5m2!1sen!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-    </div>
+      <div id="map-container"></div>
     </div>
   </div>
   <div id="section-yellow" class="section">
@@ -443,16 +432,13 @@
     <div class="section-title">Parking</div>
     <div class="section-content">
       <p>Park on the street in front of the house. Look for the Mario star balloons in the front yard!</p>
-      
       <a href="/images/parking.png"><img id="parking-image" src="images/parking.png" alt="Extra Parking Map"></a>
       <p>If spaces are full, there is plenty of extra parking near our community playground.<br>Please don't block other driveways.😊</p>
-
     </div>
   </div>
   <div id="section-green" class="section">
     <div class="background-elements"></div>
     <img style="height:25vh;" src="images/question-block.png"> 
-    <!-- <div class="section-title">Contact</div> -->
     <div class="section-content">
       <div id="contact-info">
         <p>Call or text if you have questions!</p>
@@ -461,7 +447,44 @@
       </div>
     </div>
   </div>
+  <!-- Google Maps API Script -->
+  <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB2Xr2njuLpvgN3thgoeQA-7Mz8aneG4Ds&libraries=maps,marker&callback=initMap"></script>
+  <!-- Main Script -->
   <script>
+    // Map Initialization
+    function initMap() {
+      // Coordinates for 1382 Land Grove Drive, Kernersville, NC 27284
+      const location = { lat: 36.088807, lng: -80.120575 };
+
+      // Initialize the map
+      const map = new google.maps.Map(document.getElementById('map-container'), {
+        zoom: 18,
+        center: location,
+        // Removed mapId since you likely don't need custom styling
+      });
+
+      // Create the Advanced Marker with star-marker.png
+      const marker = new google.maps.marker.AdvancedMarkerElement({
+        map: map,
+        position: location,
+        title: '1382 Land Grove Drive',
+        content: new google.maps.marker.PinElement({
+          glyph: '',
+          background: 'transparent',
+          borderColor: 'transparent',
+          glyphColor: 'transparent',
+          scale: 1.5,
+        }).element,
+      });
+
+      // Set the custom marker image
+      const markerImage = document.createElement('img');
+      markerImage.src = 'images/star-marker.png';
+      markerImage.style.width = '40px';
+      markerImage.style.height = '40px';
+      marker.content.appendChild(markerImage);
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
       // Ground blocks (in blue section)
       const groundGrid = document.querySelector('#section-blue .ground-grid');
@@ -480,33 +503,32 @@
         cloud.className = 'cloud';
         cloud.style.top = `${Math.random() * 80}%`;
         cloud.style.left = '105vw';
-        const speed = 15 + Math.random() * 10; /* Random duration 15-25s for varied speeds */
+        const speed = 15 + Math.random() * 10;
         cloud.style.animation = `drift ${speed}s linear infinite`;
-        cloud.style.animationDelay = `${Math.random() * 15}s`; /* Stagger start times */
+        cloud.style.animationDelay = `${Math.random() * 15}s`;
         blueBg.appendChild(cloud);
       }
 
       // Red Section: Bricks
       const redBg = document.querySelector('#section-red .background-elements');
-    const brickSizeVh = 10; /* Brick size is 10vh */
-    const verticalSlots = 10; /* Assume 10 vertical positions (100vh / 10vh) */
-    const horizontalSlots = Math.floor(window.innerWidth / (window.innerHeight * 0.1)); /* Dynamic horizontal slots */
-    for (let i = 0; i < 8; i++) {
-    const brick = document.createElement('div');
-    brick.className = 'brick';
-    brick.style.top = `${Math.floor(Math.random() * verticalSlots) * (100 / verticalSlots)}%`;
-    brick.style.left = `${Math.floor(Math.random() * horizontalSlots) * (100 / horizontalSlots)}%`;
-    const duration = 3 + Math.random() * 3; /* Random duration 0.5-1s */
-    brick.style.animationDuration = `${duration}s`;
-    brick.style.animationDelay = `${Math.random() * 0.5}s`; /* Stagger start times */
-    redBg.appendChild(brick);
-
-    // Update position on each animation iteration
-    brick.addEventListener('animationiteration', () => {
+      const brickSizeVh = 10;
+      const verticalSlots = 10;
+      const horizontalSlots = Math.floor(window.innerWidth / (window.innerHeight * 0.1));
+      for (let i = 0; i < 8; i++) {
+        const brick = document.createElement('div');
+        brick.className = 'brick';
         brick.style.top = `${Math.floor(Math.random() * verticalSlots) * (100 / verticalSlots)}%`;
         brick.style.left = `${Math.floor(Math.random() * horizontalSlots) * (100 / horizontalSlots)}%`;
-    });
-    }
+        const duration = 3 + Math.random() * 3;
+        brick.style.animationDuration = `${duration}s`;
+        brick.style.animationDelay = `${Math.random() * 0.5}s`;
+        redBg.appendChild(brick);
+
+        brick.addEventListener('animationiteration', () => {
+          brick.style.top = `${Math.floor(Math.random() * verticalSlots) * (100 / verticalSlots)}%`;
+          brick.style.left = `${Math.floor(Math.random() * horizontalSlots) * (100 / horizontalSlots)}%`;
+        });
+      }
 
       // Yellow Section: Coins
       const yellowBg = document.querySelector('#section-yellow .background-elements');

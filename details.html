@@ -313,6 +313,9 @@
       text-align: center;
       max-width: 90%;
     }
+    .section-content:has(#map-container){
+      max-width:100%;
+    }
 
     .section-content p {
       margin: 1vh 0;
@@ -322,15 +325,16 @@
       font-size: 2vh;
     }
 
-    #address {
+    #address a{
       font-family: 'DynaPuff', system-ui;
       font-size: 3vh;
       margin: 1vh 0;
+      color:white;
     }
 
     #map-container {
-      width: 80%;
-      max-width: 600px;
+      width: 95%;
+      max-width: 800px;
       height: 30vh;
       margin: 1vh auto;
     }
@@ -407,7 +411,7 @@
     <div class="background-elements"></div>
     <div class="section-title">Extra Details</div>
     <div class="section-content">
-      <p>Party will be in the backyard. We will have lots of snacks, fresh pizza, games, activities, playground, and more!</p>
+      <p>Party will be in the backyard. We will have lots of snacks, pizza, games, activities, playground, and more!</p>
       <p><br>In case of rain, we will reach out <i>(using phone number provided on RSVP)</i> for updates.</p>
     </div>
     <div class="scroll-indicator">
@@ -423,8 +427,10 @@
     <div class="background-elements"></div>
     <div class="section-title">Location</div>
     <div class="section-content">
-      <p id="address">1382 Land Grove Drive<br>Kernersville, NC 27284</p>
-      <div id="map-container"></div>
+      <p id="address"><a href="https://maps.app.goo.gl/daAcAdpGEGWxkWi29">1382 Land Grove Drive<br>Kernersville, NC 27284</a></p>
+      <div id="map-container">
+        <gmp-map center="36.088807,-80.120575" zoom="8" map-id="8db71ca780ff65ff" style="height: 400px"></gmp-map>
+      </div>
     </div>
   </div>
   <div id="section-yellow" class="section">
@@ -443,7 +449,7 @@
       <div id="contact-info">
         <p>Call or text if you have questions!</p>
         <p><br></p>
-        <p>Ashley Shipp <small>(mom)</small></p> <a href="tel:+13367053322">(336) 705-3322</a>
+        <p style="text-align:center;">Ashley Shipp <small>(mom)</small></p> <a style="text-align:center;" href="tel:+13367053322">(336) 705-3322&nbsp;&nbsp;</a>
       </div>
     </div>
   </div>
@@ -454,13 +460,14 @@
     // Map Initialization
     function initMap() {
       // Coordinates for 1382 Land Grove Drive, Kernersville, NC 27284
-      const location = { lat: 36.088807, lng: -80.120575 };
+      const location = { lat: 36.0888, lng: -80.12035 };
 
       // Initialize the map
       const map = new google.maps.Map(document.getElementById('map-container'), {
         zoom: 18,
         center: location,
-        // Removed mapId since you likely don't need custom styling
+        mapId: "8db71ca780ff65ff",
+        mapTypeControl: false,
       });
 
       // Create the Advanced Marker with star-marker.png
